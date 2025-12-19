@@ -47,3 +47,25 @@ wifi:
 
 # Enable captive portal as fallback mechanism for when connecting to the configured WiFi fails.
 captive_portal:
+    
+# ===================== #
+#     SENSOR CONFIG     #
+# ===================== #
+
+# i2C pin configuration
+i2c:
+  sda: GPIO17
+  scl: GPIO18
+  scan: true
+
+# AHT20 sensor configuration for temperature and humidity
+sensor:
+  - platform: aht10
+    variant: AHT20
+    temperature:
+      name: "Thermostat Temperature"
+      id: builtin_temp
+    humidity:
+      name: "Thermostat Humidity"
+      id: builtin_hum
+    update_interval: 60s
