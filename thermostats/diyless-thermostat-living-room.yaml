@@ -1,0 +1,49 @@
+# Thermostat - Living Room
+# -- DIYLESS Thermostat 3
+# -- https://diyless.com/product/opentherm-thermostat3
+
+# ==================== #
+#     BASIC CONFIG     #
+# ==================== #
+esphome:
+  name: diyless-thermostat-living-room
+  friendly_name: Thermostat Living Room
+
+esp32:
+  board: esp32-s3-devkitc-1
+  framework:
+    type: esp-idf
+
+# Enable logging
+logger:
+  level: DEBUG
+  logs:
+    # Reduce verbosity for components that might log sensitive data
+    wifi: WARN
+    api: WARN
+
+# Enable Home Assistant API
+api:
+  encryption:
+    key: !secret diyless-therm_lr_api-key
+
+# Enable Over-The-Air (OTA) platform to remotely install modified/updated firmware
+ota:
+  - platform: esphome
+    password: !secret diyless-therm_lr_ota-password
+
+# Enable WiFi
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+
+  # Set minimum WiFi security - reject connections to networks with weaker security
+  min_auth_mode: WPA2
+
+  # Enable fallback hotspot (captive portal) in case wifi connection fails
+  ap:
+    ssid: "Diyless-Thermostat-Living-Room"
+    password: !secret diyless-therm_lr_fallback-password
+
+# Enable captive portal as fallback mechanism for when connecting to the configured WiFi fails.
+captive_portal:
