@@ -63,9 +63,9 @@ sensor:
   - platform: aht10
     variant: AHT20
     temperature:
-      name: "Thermostat Temperature"
+      name: "Temperature"
       id: builtin_temp
     humidity:
-      name: "Thermostat Humidity"
+      name: "Humidity"
       id: builtin_hum
     update_interval: 60s
