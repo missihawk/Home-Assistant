@@ -75,7 +75,7 @@ wifi:
   domain: !secret network_domain
 
   # Set minimum WiFi security - reject connections to networks with weaker security
-  #min_auth_mode: WPA2
+  #min_auth_mode: WPA3
 
 # ethernet:
   # type: LAN8720
