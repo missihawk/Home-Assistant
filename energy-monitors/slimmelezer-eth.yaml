@@ -72,6 +72,7 @@ web_server:
 wifi:
   ssid: !secret wifi_ssid
   password: !secret wifi_password
+  domain: !secret network_domain
 
   # Set minimum WiFi security - reject connections to networks with weaker security
   #min_auth_mode: WPA2
