@@ -34,8 +34,9 @@ ota:
 
 # Enable WiFi
 wifi:
-  ssid: !secret wifi_ssid_tplink
-  password: !secret wifi_password_tplink
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+  domain: !secret network_domain
 
   # Set minimum WiFi security - reject connections to networks with weaker security
   #min_auth_mode: WPA3
