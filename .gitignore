@@ -1,5 +1,6 @@
 secrets.yaml
 *backup/
+*build/
 
 # Editor settings
 .vscode/
