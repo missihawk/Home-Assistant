@@ -1,5 +1,6 @@
 # DIYLESS Thermostat 3
-# https://diyless.com/product/opentherm-thermostat3
+# - https://diyless.com/product/opentherm-thermostat3
+# - https://github.com/diyless/esphome-opentherm-thermostat/blob/main/diyless-thermostat-3.yaml
 
 esphome:
   name: diyless-thermostat-3
@@ -18,20 +19,20 @@ esp32:
       CONFIG_ESP32_DEFAULT_CPU_FREQ_240: "y"
       CONFIG_ESP32_DEFAULT_CPU_FREQ_MHZ: "240"
   flash_size: 8MB
-  
-#https://esphome.io/components/psram.html  
+
+#https://esphome.io/components/psram.html
 psram:
   mode: octal
-  speed: 80MHz  
+  speed: 80MHz
 
 # Enable logging
 logger:
   level: DEBUG
 
 # Enable Home Assistant API
-#api:
-#  encryption:
-#    key: "<your key>"
+api:
+  encryption:
+    key: "<your key>"
 
 # Enable Over-The-Air (OTA) platform to remotely install modified/updated firmware
 ota:
@@ -57,14 +58,14 @@ wifi:
   ap:
     ssid: "DIYLESS-Thermostat-3"
     password: ""
-    
+
 # Enable captive portal as fallback mechanism for when connecting to the configured WiFi fails.
 captive_portal:
 
 # Enable simple web server to remotelly control the device using web interface
 web_server:
 
-# Use external DIYLESS Thermostat 3 OpenTherm Component for ESPHome 
+# Use external DIYLESS Thermostat 3 OpenTherm Component for ESPHome
 external_components:
   source: github://diyless/esphome-opentherm-t3
   refresh: 0s
@@ -142,12 +143,12 @@ output:
       number: GPIO46
 
 # Use numbers to control numerical values like CH/DHW setpoint from HA interface
-# https://esphome.io/components/opentherm.html#numerical-values 
+# https://esphome.io/components/opentherm.html#numerical-values
 number:
   - platform: opentherm
     t_dhw_set:
       id: dhw_setpoint
-      name: "How Water Setpoint"
+      name: "Hot Water Setpoint"
       step: 1
       min_value: 30
       max_value: 80
@@ -189,7 +190,7 @@ binary_sensor:
     dhw_active:
       id: dhw_active
       name: "Hot Water Active"
-      
+
     flame_on:
       id: flame_on
       name: "Flame On"
@@ -237,10 +238,10 @@ sensor:
 # https://esphome.io/components/sensor/xiaomi_ble#lywsd03mmc
 - platform: pvvx_mithermometer
   id: pvvx_thermometer
-  mac_address: "A4:C1:38:AA:AA:AA" #your sensor MAC
+  mac_address: "A4:C1:38:XX:XX:XX" #your sensor MAC
   temperature:
     name: "BLE Sensor Temperature"
-    id: ble_sensor    
+    id: ble_sensor
   humidity:
     name: "BLE Humidity"
   battery_level:
@@ -283,15 +284,15 @@ sensor:
   t_ret:
     name: Return Water Temperature
   max_t_set:
-    name: Max CH Setpoint    
+    name: Max CH Setpoint
   max_t_set_ub:
     name: Upper Bound of CH Setpoint
-  max_t_set_lb:  
+  max_t_set_lb:
     name: Lower Bound CH Setpoint
-  t_exhaust:    
+  t_exhaust:
     name: Boiler Exhaust Temperature
     entity_category: diagnostic
-  ch_pressure:    
+  ch_pressure:
     name: Water Pressure
     entity_category: diagnostic
   oem_fault_code:
@@ -317,7 +318,7 @@ climate:
       temperature_step:
         target_temperature: 0.5
         current_temperature: 0.1
-    control_parameters: 
+    control_parameters:
       kp: 0.77
       ki: 0.0005
       kd: 0
@@ -363,7 +364,7 @@ climate:
             - lvgl.button.update:
                 id: ch_on_button
                 state:
-                  checked: false  
+                  checked: false
           else:
             - switch.turn_on: ch_enable
             - lvgl.arc.update:
@@ -378,11 +379,11 @@ climate:
                 id: ch_on_button
                 state:
                   checked: true
-          
+
       - logger.log:
           format: "climate mode=%s, t=%.1f"
           args: ['std::string(LOG_STR_ARG(climate_mode_to_string(x.mode))).c_str()', 'x.target_temperature' ]
-          level: INFO    
+          level: INFO
 
 spi:
   clk_pin:
@@ -477,7 +478,7 @@ font:
 
 # Use LVGL component for UI interface configuration
 # https://esphome.io/components/lvgl/index.html
-lvgl:  
+lvgl:
   disp_bg_color: black
   text_color: white
   displays: diyless_display
@@ -487,7 +488,7 @@ lvgl:
     timeout: !lambda "return (id(display_timeout).state * 1000);"
     then:
       - light.turn_off: backlight
-      - lvgl.pause:  
+      - lvgl.pause:
   pages:
     - id: ch_page
       bg_opa: TRANSP
@@ -514,7 +515,7 @@ lvgl:
                 - if:
                     condition:
                       - lambda: 'return id(ch_climate).target_temperature != x / 10;'
-                    then:                
+                    then:
                       - climate.control:
                           id: ch_climate
                           target_temperature: !lambda return x / 10;
@@ -627,7 +628,7 @@ lvgl:
                 - if:
                     condition:
                       - lambda: 'return id(dhw_setpoint).state != x / 10;'
-                    then:                
+                    then:
                       - number.set:
                           id: dhw_setpoint
                           value: !lambda return x / 10;

@@ -1,13 +1,17 @@
-# Thermostat - Living Room
+# Thermostat
 # -- DIYLESS Thermostat 3
 # -- https://diyless.com/product/opentherm-thermostat3
 
-# ==================== #
-#     BASIC CONFIG     #
-# ==================== #
+# ==== BASIC CONFIG ====
+substitutions:
+  device_name: diyless-thermostat
+  friendly_name: Thermostat
+  device_description: DIYLESS Thermostat 3 (esp32 with OpenTherm and 4.0-inch display)
+
 esphome:
-  name: diyless-thermostat-living-room
-  friendly_name: Thermostat Living Room
+  name: ${device_name}
+  friendly_name: ${friendly_name}
+  comment: ${device_description}
 
 esp32:
   board: esp32-s3-devkitc-1
@@ -18,29 +22,28 @@ esp32:
 logger:
   level: INFO
   logs:
-    # Reduce verbosity for components that might log sensitive data
     wifi: WARN
     api: WARN
 
-# Enable Home Assistant API
-api:
-  encryption:
-    key: !secret diyless-therm_lr_api-key
-
-# Enable Over-The-Air (OTA) platform to remotely install modified/updated firmware
-ota:
-  - platform: esphome
-    password: !secret diyless-therm_lr_ota-password
-
+# ==== CONNECTIVITY ====
 # Enable WiFi
 wifi:
   ssid: !secret wifi_ssid
   password: !secret wifi_password
   domain: !secret network_domain
 
-  # Set minimum WiFi security - reject connections to networks with weaker security
-  #min_auth_mode: WPA3
-    
+  min_auth_mode: WPA3
+
+# Enable Home Assistant API
+api:
+  encryption:
+    key: !secret diyless-thermostat__encryption_key
+
+# Enable Over-The-Air (OTA) platform to remotely install modified/updated firmware
+ota:
+  - platform: esphome
+    encryption:
+
 # ===================== #
 #     SENSOR CONFIG     #
 # ===================== #
@@ -56,9 +59,11 @@ sensor:
   - platform: aht10
     variant: AHT20
     temperature:
-      name: "Temperature"
+      name: Temperature
       id: builtin_temp
+      icon: "mdi:thermometer"
     humidity:
-      name: "Humidity"
+      name: Humidity
       id: builtin_hum
+      icon: "mdi:water-percent"
     update_interval: 60s
