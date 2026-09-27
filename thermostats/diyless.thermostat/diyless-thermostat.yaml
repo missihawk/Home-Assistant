@@ -96,7 +96,7 @@ sensor:
     update_interval: 60s
 
 light:
-  # RGB dispay backlight
+  # RGB display backlight
   - platform: monochromatic
     id: backlight
     name: ${friendly_name} Backlight
@@ -105,7 +105,7 @@ light:
     default_transition_length: 0s
 
 output:
-  # RGB dispay backlight output
+  # RGB display backlight output
   - platform: ledc
     id: backlight_output
     pin: GPIO46
