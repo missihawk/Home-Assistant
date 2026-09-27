@@ -1,6 +1,12 @@
 # Thermostat
 # -- DIYLESS Thermostat 3
 # -- https://diyless.com/product/opentherm-thermostat3
+#
+# Board:        DIYLESS THERMOSTAT v3.3 (or v3.2 dependig if you are looking on the back or front of the board)
+# Controller:   ESP32-S3-WROOM-1
+# Display:      4.0" IPS 480x480 powered by the Sitronix ST7701S display controller
+# Touch Panel:  Goodix GT911 touch controller
+# Sensor:       AHT20
 
 # ==== BASIC CONFIG ====
 substitutions:
