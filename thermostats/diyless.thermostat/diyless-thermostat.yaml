@@ -64,6 +64,11 @@ ota:
 #     SENSOR CONFIG     #
 # ===================== #
 # ==== INTERFACES AND BUSSES ====
+# Enable PSRAM
+psram:
+  mode: octal
+  speed: 80MHz
+
 # Shared I2C Bus [GT911, AHT20]
 i2c:
   sda: GPIO17
