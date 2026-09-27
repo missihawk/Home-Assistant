@@ -21,12 +21,18 @@ esphome:
   name: ${device_name}
   friendly_name: ${friendly_name}
   comment: ${device_description}
+  platformio_options:
+    board_build.flash_mode: dio
 
 # ESP32 Platform
 esp32:
   board: esp32-s3-devkitc-1
   framework:
     type: esp-idf
+    sdkconfig_options:
+      CONFIG_ESP32_DEFAULT_CPU_FREQ_240: "y"
+      CONFIG_ESP32_DEFAULT_CPU_FREQ_MHZ: "240"
+  flash_size: 8MB
 
 # Enable logging
 logger:
