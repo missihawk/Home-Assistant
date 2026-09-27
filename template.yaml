@@ -1,0 +1,52 @@
+# ==== BASIC CONFIG ====
+substitutions:
+  device_name: name # ToDo
+  friendly_name: Name # ToDo
+  device_description: Short device description/comment # ToDo
+
+esphome:
+  name: ${device_name}
+  friendly_name: ${friendly_name}
+  comment: ${device_description}
+
+esp32:
+  board: esp32 # ToDo - Change according to board configuration
+  framework:
+    type: esp-idf # ToDo - Change according to application needs / board configuration (arduino or esp-idf)
+
+# Enable logging
+logger:
+  level: INFO
+  logs:
+    wifi: WARN # ToDo - If used
+    api: WARN
+
+# ==== CONNECTIVITY ====
+# Enable WiFi
+wifi: # ToDo - If available (prefer ethernet over WiFi)
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+  domain: !secret network_domain # ToDo - If needed
+
+  min_auth_mode: WPA2  # Or WPA3 for ESP32 if all your networks support it
+
+  manual_ip:
+    static_ip: !secret device_name__ip
+    gateway: !secret gateway_ip
+    subnet: !secret subnet_mask
+
+# Enable Ethernet
+ethernet: # ToDo - If available (prefer ethernet over WiFi)
+  # See https://esphome.io/components/ethernet/ for examples based on hardware
+
+# Enable Home Assistant API
+api:
+  encryption:
+    key: !secret device_name__encryption_key # ToDo - Change device name and add to secrets.yaml
+
+# Enable Over-The-Air (OTA) platform to remotely install modified/updated firmware
+ota:
+  - platform: esphome
+    encryption:
+
+# ==== DEVICE SPECIFIC CONFIG ====
