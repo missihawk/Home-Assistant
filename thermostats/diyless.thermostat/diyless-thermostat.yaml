@@ -81,11 +81,6 @@ spi:
   mosi_pin:  GPIO11
 
 # ==== HARDWARE ====
-output:
-  - platform: ledc
-    id: backlight_output
-    pin: GPIO46
-
 sensor:
   # AHT20 sensor configuration for temperature and humidity
   - platform: aht10
@@ -99,3 +94,18 @@ sensor:
       name: Humidity
       icon: "mdi:water-percent"
     update_interval: 60s
+
+light:
+  # RGB dispay backlight
+  - platform: monochromatic
+    id: backlight
+    name: ${friendly_name} Backlight
+    output: backlight_output
+    restore_mode: ALWAYS_ON
+    default_transition_length: 0s
+
+output:
+  # RGB dispay backlight output
+  - platform: ledc
+    id: backlight_output
+    pin: GPIO46
