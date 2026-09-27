@@ -8,9 +8,9 @@
 # Touch Panel:  Goodix GT911 touch controller
 # Sensor:       AHT20
 
-# ===================== #
-#     BASIC CONFIG      #
-# ===================== #
+# =================== #
+#     CORE CONFIG     #
+# =================== #
 substitutions:
   device_name: diyless-thermostat
   friendly_name: Thermostat
@@ -60,9 +60,9 @@ ota:
   - platform: esphome
     encryption:
 
-# ===================== #
-#     SENSOR CONFIG     #
-# ===================== #
+# =================== #
+#     COMPONTENTS     #
+# =================== #
 # ==== INTERFACES AND BUSSES ====
 # Enable PSRAM
 psram:
@@ -80,17 +80,17 @@ spi:
   clk_pin: GPIO12
   mosi_pin:  GPIO11
 
-# ==== SENNSORS ====
-# AHT20 sensor configuration for temperature and humidity
+# ==== HARDWARE ====
 sensor:
+  # AHT20 sensor configuration for temperature and humidity
   - platform: aht10
     variant: AHT20
     temperature:
-      name: Temperature
       id: builtin_temp
+      name: Temperature
       icon: "mdi:thermometer"
     humidity:
-      name: Humidity
       id: builtin_hum
+      name: Humidity
       icon: "mdi:water-percent"
     update_interval: 60s
