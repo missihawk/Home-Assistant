@@ -8,17 +8,21 @@
 # Touch Panel:  Goodix GT911 touch controller
 # Sensor:       AHT20
 
-# ==== BASIC CONFIG ====
+# ===================== #
+#     BASIC CONFIG      #
+# ===================== #
 substitutions:
   device_name: diyless-thermostat
   friendly_name: Thermostat
   device_description: DIYLESS Thermostat 3 (esp32 with OpenTherm and 4.0-inch display)
 
+# ESPHome Core
 esphome:
   name: ${device_name}
   friendly_name: ${friendly_name}
   comment: ${device_description}
 
+# ESP32 Platform
 esp32:
   board: esp32-s3-devkitc-1
   framework:
@@ -53,13 +57,14 @@ ota:
 # ===================== #
 #     SENSOR CONFIG     #
 # ===================== #
-
-# i2C pin configuration
+# ==== INTERFACES AND BUSSES ====
+# Shared I2C Bus [GT911, AHT20]
 i2c:
   sda: GPIO17
   scl: GPIO18
   scan: true
 
+# ==== SENNSORS ====
 # AHT20 sensor configuration for temperature and humidity
 sensor:
   - platform: aht10
