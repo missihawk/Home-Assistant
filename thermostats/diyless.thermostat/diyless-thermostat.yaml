@@ -81,6 +81,11 @@ spi:
   mosi_pin:  GPIO11
 
 # ==== HARDWARE ====
+output:
+  - platform: ledc
+    id: backlight_output
+    pin: GPIO46
+
 sensor:
   # AHT20 sensor configuration for temperature and humidity
   - platform: aht10
