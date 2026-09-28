@@ -123,16 +123,18 @@ switch:
     entity_category: "config"
     optimistic: true
     turn_on_action:
-      - logger.log:
-          level: DEBUG
-          format: "Starting Antiburn"
       - if:
           condition: lvgl.is_paused
           then:
-            - lvgl.resume:
-            - lvgl.widget.redraw:
-      - lvgl.pause:
-          show_snow: true
+            - logger.log:
+                level: DEBUG
+                format: "Antiburn enabled: Starting immediately (display paused)"
+            - lvgl.pause:
+                show_snow: true
+          else:
+            - logger.log:
+                level: DEBUG
+                format: "Antiburn enabled: Will apply on next display idle"
     turn_off_action:
       - logger.log:
           level: DEBUG
@@ -140,8 +142,7 @@ switch:
       - if:
           condition: lvgl.is_paused
           then:
-            - lvgl.resume:
-            - lvgl.widget.redraw:
+            - lvgl.pause:
 
 touchscreen:
   - id: touch_main
@@ -174,7 +175,7 @@ light:
     entity_category: "config"
     output: out_backlight
     restore_mode: ALWAYS_ON
-    default_transition_length: 0s
+    default_transition_length: 100ms
     on_turn_on:
       - logger.log:
           level: DEBUG
@@ -182,10 +183,20 @@ light:
       - lvgl.resume:
       - lvgl.widget.redraw:
     on_turn_off:
-      - logger.log:
-          level: DEBUG
-          format: "Screen off detected: Pause LVGL engine"
-      - lvgl.pause:
+      - if:
+          condition:
+            - switch.is_on: switch_display_antiburn
+          then:
+            - logger.log:
+                level: DEBUG
+                format: "Screen off detected: Pause LVGL engine (antiburn active)"
+            - lvgl.pause:
+                show_snow: true
+          else:
+            - logger.log:
+                level: DEBUG
+                format: "Screen off detected: Pause LVGL engine (antiburn not active)"
+            - lvgl.pause:
 
 display:
   - id: disp_main
