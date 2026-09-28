@@ -69,32 +69,35 @@ psram:
 
 # Shared I2C Bus [GT911, AHT20]
 i2c:
+  id: bus_i2c
   sda: GPIO17
   scl: GPIO18
   scan: true
 
 # Shared SPI Bus [ST7701S]
 spi:
+  id: bus_spi
   clk_pin: GPIO12
   mosi_pin:  GPIO11
 
 # ==== HARDWARE ====
 sensor:
   # AHT20 sensor configuration for temperature and humidity
-  - platform: aht10
+  - id: sens_builtin
+    platform: aht10
     variant: AHT20
     temperature:
-      id: builtin_temp
+      id: sens_builtin_temp
       name: Temperature
       icon: "mdi:thermometer"
     humidity:
-      id: builtin_hum
+      id: sens_builtin_hum
       name: Humidity
       icon: "mdi:water-percent"
     update_interval: 60s
 
 touchscreen:
-  - id: diyless_touchscreen
+  - id: touch_main
     platform: gt911
     interrupt_pin:
       number: GPIO10
@@ -113,19 +116,19 @@ touchscreen:
           then:
             - lvgl.resume:
             - lvgl.widget.redraw:
-            - light.turn_on: backlight
+            - light.turn_on: light_backlight
 
 light:
   # RGB display backlight
-  - platform: monochromatic
-    id: backlight
-    name: ${friendly_name} Backlight
-    output: backlight_output
+  - id: light_backlight
+    platform: monochromatic
+    name: Backlight
+    output: out_backlight
     restore_mode: ALWAYS_ON
     default_transition_length: 0s
 
 display:
-  - id: diyless_display
+  - id: disp_main
     platform: mipi_rgb
     model: ST7701S
     dimensions:
@@ -184,13 +187,13 @@ display:
         - 8         # b5
 
 lvgl:
-  displays: diyless_display
-  touchscreens: diyless_touchscreen
+  displays: disp_main
+  touchscreens: touch_main
 
 output:
   # RGB display backlight output
-  - platform: ledc
-    id: backlight_output
+  - id: out_backlight
+    platform: ledc
     pin:
       number: GPIO46
       ignore_strapping_warning: true
