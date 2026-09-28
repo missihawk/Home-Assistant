@@ -140,6 +140,7 @@ display:
       height: 480
 
     # Timing & Sync Control Lines
+    cs_pin: GPIO1
     de_pin: GPIO45
     hsync_pin: GPIO5
     vsync_pin: GPIO4
