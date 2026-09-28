@@ -183,6 +183,10 @@ display:
         - 16        # b4
         - 8         # b5
 
+lvgl:
+displays: diyless_display
+touchscreens: diyless_touchscreen
+
 output:
   # RGB display backlight output
   - platform: ledc
