@@ -131,9 +131,7 @@ touchscreen:
           then:
             - logger.log:
                 level: DEBUG
-                format: "Touch detected: Resuming LVGL engine and restoring backlight"
-            - lvgl.resume:
-            - lvgl.widget.redraw:
+                format: "Touch detected: Restoring backlight"
             - light.turn_on: light_backlight
 
 light:
@@ -144,6 +142,17 @@ light:
     output: out_backlight
     restore_mode: ALWAYS_ON
     default_transition_length: 0s
+    on_turn_on:
+      - logger.log:
+          level: DEBUG
+          format: "Screen on detected: Resuming LVGL engine"
+      - lvgl.resume:
+      - lvgl.widget.redraw:
+    on_turn_off:
+      - logger.log:
+          level: DEBUG
+          format: "Screen off detected: Pause LVGL engine"
+      - lvgl.pause:
 
 display:
   - id: disp_main
@@ -213,8 +222,7 @@ lvgl:
     then:
       - logger.log:
           level: DEBUG
-          format: "LVGL is idle: Pause LVGL engine and deactivating backlight"
-      - lvgl.pause:
+          format: "LVGL is idle: Deactivating backlight"
       - light.turn_off: light_backlight
 
 output:
