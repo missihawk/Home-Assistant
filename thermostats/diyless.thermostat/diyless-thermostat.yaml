@@ -129,6 +129,9 @@ touchscreen:
       - if:
           condition: lvgl.is_paused
           then:
+            - logger.log:
+                level: DEBUG
+                format: "Touch detected: Resuming LVGL engine and restoring backlight"
             - lvgl.resume:
             - lvgl.widget.redraw:
             - light.turn_on: light_backlight
@@ -204,6 +207,15 @@ display:
 lvgl:
   displays: disp_main
   touchscreens: touch_main
+
+  on_idle:
+    timeout: !lambda "return (id(num_backlight_timeout).state * 1000);"
+    then:
+      - logger.log:
+          level: DEBUG
+          format: "LVGL is idle: Pause LVGL engine and deactivating backlight"
+      - lvgl.pause:
+      - light.turn_off: light_backlight
 
 output:
   # RGB display backlight output
