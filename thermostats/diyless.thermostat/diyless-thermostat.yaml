@@ -21,18 +21,16 @@ esphome:
   name: ${device_name}
   friendly_name: ${friendly_name}
   comment: ${device_description}
-  platformio_options:
-    board_build.flash_mode: dio
 
 # ESP32 Platform
 esp32:
   board: esp32-s3-devkitc-1
+  flash_size: 8MB
   framework:
     type: esp-idf
     sdkconfig_options:
       CONFIG_ESP32_DEFAULT_CPU_FREQ_240: "y"
       CONFIG_ESP32_DEFAULT_CPU_FREQ_MHZ: "240"
-  flash_size: 8MB
 
 # Enable logging
 logger:
@@ -156,7 +154,9 @@ display:
     # Control Interface Pins
     cs_pin: GPIO1
     reset_pin: GPIO43
-    de_pin: GPIO45
+    de_pin:
+      number: GPIO45
+      ignore_strapping_warning: true
     hsync_pin: GPIO5
     vsync_pin: GPIO4
     pclk_pin: GPIO21
@@ -191,4 +191,6 @@ output:
   # RGB display backlight output
   - platform: ledc
     id: backlight_output
-    pin: GPIO46
+    pin:
+      number: GPIO46
+      ignore_strapping_warning: true
