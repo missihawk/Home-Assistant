@@ -1,3 +1,29 @@
+# ESPHome YAML Style & ID Conventions
+
+## 1. ID Naming Taxonomy (`[type]_[hardware_group/source]_[sub-item]`)
+Identifiers follow a hardware-first, subsystem-based `snake_case` hierarchy. This keeps IDs traceable directly to the physical PCB schematic rather than specific UI or abstraction layers.
+
+- **Category Prefixes:** Use short 3 to 4 letter domain prefixes:
+  - `bus_`: Communication interfaces (`bus_i2c`, `bus_spi`)
+  - `disp_` / `touch_`: Screen and digitizer controllers (`disp_main`, `touch_main`)
+  - `out_`: Raw GPIO/PWM/LEDC hardware outputs (`out_backlight`)
+  - `light_`: User-facing Home Assistant light entities (`light_backlight`)
+  - `sens_`: Sensor inputs (`sens_builtin_temp`, `sens_builtin_hum`)
+
+- **Subsystem Hierarchy:** Group by physical component source before measurement type (e.g., `sens_builtin_temp` instead of `sens_temp_builtin`).
+
+## 2. Block Structure Standard
+Maintain a consistent field order across all YAML component definitions to ensure clean readability across large node configs:
+
+```yaml
+component_domain:
+  - id: <domain_id>          # 1. Identifier always at top
+    platform: <platform>     # 2. Driver platform
+    name: <entity_name>      # 3. User-facing entity name (if applicable)
+    # ...                    # 4. Hardware/pin configurations
+    # ...                    # 5. Timing, behavior, & automations
+```
+
 # Git Tag Quick Reference
 
 ## 1. Versioning Logic (`MAJOR.MINOR.PATCH`)
