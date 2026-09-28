@@ -105,10 +105,10 @@ number:
     optimistic: true
     unit_of_measurement: "s"
     restore_value: true
-    initial_value: 45
+    initial_value: 60
     min_value: 10
-    max_value: 180
-    step: 5
+    max_value: 360
+    step: 10
     mode: slider
 
 touchscreen:
