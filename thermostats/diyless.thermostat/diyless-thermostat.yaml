@@ -84,6 +84,17 @@ spi:
 time:
   - id: time_ha
     platform: homeassistant
+    on_time:
+      - hours: 2,3,4,5
+        minutes: 5
+        seconds: 0
+        then:
+          - switch.turn_on: switch_display_antiburn
+      - hours: 2,3,4,5
+        minutes: 35
+        seconds: 0
+        then:
+          - switch.turn_off: switch_display_antiburn
 
 sensor:
   # AHT20 sensor configuration for temperature and humidity
