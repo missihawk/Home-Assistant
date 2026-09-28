@@ -115,6 +115,34 @@ number:
     step: 10
     mode: slider
 
+switch:
+  - id: switch_display_antiburn
+    platform: template
+    name: Antiburn active
+    icon: mdi:television-shimmer
+    entity_category: "config"
+    optimistic: true
+    turn_on_action:
+      - logger.log:
+          level: DEBUG
+          format: "Starting Antiburn"
+      - if:
+          condition: lvgl.is_paused
+          then:
+            - lvgl.resume:
+            - lvgl.widget.redraw:
+      - lvgl.pause:
+          show_snow: true
+    turn_off_action:
+      - logger.log:
+          level: DEBUG
+          format: "Stopping Antiburn"
+      - if:
+          condition: lvgl.is_paused
+          then:
+            - lvgl.resume:
+            - lvgl.widget.redraw:
+
 touchscreen:
   - id: touch_main
     platform: gt911
@@ -143,6 +171,7 @@ light:
   - id: light_backlight
     platform: monochromatic
     name: Backlight
+    entity_category: "config"
     output: out_backlight
     restore_mode: ALWAYS_ON
     default_transition_length: 0s
