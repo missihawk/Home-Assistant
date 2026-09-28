@@ -108,7 +108,7 @@ sensor:
           x_max: 480
           y_min: 0
           y_max: 480
-        update_interval: 100ms
+        update_interval: 50ms
         on_release:
           - if:
               condition: lvgl.is_paused
