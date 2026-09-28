@@ -96,6 +96,21 @@ sensor:
       icon: "mdi:water-percent"
     update_interval: 60s
 
+number:
+  - id: num_backlight_timeout
+    platform: template
+    name: Backlight timeout
+    icon: mdi:timer-outline
+    entity_category: "config"
+    optimistic: true
+    unit_of_measurement: "s"
+    restore_value: true
+    initial_value: 45
+    min_value: 10
+    max_value: 180
+    step: 5
+    mode: slider
+
 touchscreen:
   - id: touch_main
     platform: gt911
