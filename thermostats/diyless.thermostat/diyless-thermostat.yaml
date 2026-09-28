@@ -104,6 +104,56 @@ light:
     restore_mode: ALWAYS_ON
     default_transition_length: 0s
 
+display:
+  - platform: mipi_rgb
+    id: diyless_display
+    model: ST7701S
+    auto_clear_enabled: false
+    update_interval: never
+    color_order: RGB
+    invert_colors: true
+    dimensions:
+      width: 480
+      height: 480
+
+    # Timing & Sync Control Lines
+    de_pin: GPIO45
+    hsync_pin: GPIO5
+    vsync_pin: GPIO4
+    pclk_pin: GPIO21
+    reset_pin: GPIO43
+    pclk_frequency: 10MHz
+    pclk_inverted: false
+
+    hsync_pulse_width: 14
+    hsync_back_porch: 14
+    hsync_front_porch: 14
+    vsync_pulse_width: 10
+    vsync_back_porch: 14
+    vsync_front_porch: 14
+
+    # 16-Bit RGB565 Data Bus
+    data_pins:
+      red:
+        - 39        # r1
+        - 40        # r2
+        - 41        # r3
+        - 42        # r4
+        - 2         # r5
+      green:
+        - 0         # g0
+        - 9         # g1
+        - 14        # g2
+        - 47        # g3
+        - 48        # g4
+        - 3         # g5
+      blue:
+        - 6         # b1
+        - 7         # b2
+        - 15        # b3
+        - 16        # b4
+        - 8         # b5
+
 output:
   # RGB display backlight output
   - platform: ledc
