@@ -110,6 +110,7 @@ display:
     model: ST7701S
     auto_clear_enabled: false
     update_interval: never
+    pixel_mode: 18bit
     color_order: RGB
     invert_colors: true
     dimensions:
