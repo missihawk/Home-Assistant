@@ -81,6 +81,10 @@ spi:
   mosi_pin:  GPIO11
 
 # ==== HARDWARE ====
+time:
+  - id: time_ha
+    platform: homeassistant
+
 sensor:
   # AHT20 sensor configuration for temperature and humidity
   - id: sens_builtin
