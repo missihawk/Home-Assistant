@@ -98,8 +98,7 @@ time:
 
 sensor:
   # AHT20 sensor configuration for temperature and humidity
-  - id: sens_builtin
-    platform: aht10
+  - platform: aht10
     variant: AHT20
     temperature:
       id: sens_builtin_temp
@@ -111,12 +110,34 @@ sensor:
       icon: "mdi:water-percent"
     update_interval: 60s
 
+  # Internal ESP32 Diagnostics
+  - id: sens_sys_uptime
+    platform: uptime
+    name: Uptime
+    icon: mdi:timer-outline
+    entity_category: diagnostic
+
+  - id: sens_wifi_rssi
+    platform: wifi_signal
+    name: Wi-Fi Signal
+    icon: mdi:wifi-strength-4
+    entity_category: diagnostic
+    update_interval: 60s
+
+text_sensor:
+  - platform: wifi_info
+    ip_address:
+      id: sens_wifi_ip
+      name: IP Address
+      icon: mdi:ip
+      entity_category: diagnostic
+
 number:
   - id: num_backlight_timeout
     platform: template
     name: Backlight timeout
-    icon: mdi:timer-outline
-    entity_category: "config"
+    icon: mdi:timer-settings-outline
+    entity_category: config
     optimistic: true
     unit_of_measurement: "s"
     restore_value: true
@@ -131,7 +152,7 @@ switch:
     platform: template
     name: Antiburn active
     icon: mdi:television-shimmer
-    entity_category: "config"
+    entity_category: config
     optimistic: true
     turn_on_action:
       - if:
@@ -154,6 +175,12 @@ switch:
           condition: lvgl.is_paused
           then:
             - lvgl.pause:
+
+button:
+  - id: btn_sys_restart
+    platform: restart
+    name: Restart Device
+    entity_category: config
 
 touchscreen:
   - id: touch_main
@@ -183,7 +210,7 @@ light:
   - id: light_backlight
     platform: monochromatic
     name: Backlight
-    entity_category: "config"
+    entity_category: config
     output: out_backlight
     restore_mode: ALWAYS_ON
     default_transition_length: 100ms
