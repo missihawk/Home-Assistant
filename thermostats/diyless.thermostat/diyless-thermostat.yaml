@@ -84,6 +84,10 @@ spi:
 time:
   - id: time_ha
     platform: homeassistant
+    on_time_sync:
+      - logger.log:
+          level: DEBUG
+          format: "HA time synchronized successfully"
     on_time:
       - hours: 2,3,4,5
         minutes: 5
