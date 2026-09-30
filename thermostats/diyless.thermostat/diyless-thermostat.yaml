@@ -47,11 +47,13 @@ wifi:
   domain: !secret network_domain
 
   min_auth_mode: WPA3
+  reboot_timeout: 0s
 
 # Enable Home Assistant API
 api:
   encryption:
     key: !secret diyless-thermostat__encryption_key
+  reboot_timeout: 0s
 
 # Enable Over-The-Air (OTA) platform to remotely install modified/updated firmware
 ota:
