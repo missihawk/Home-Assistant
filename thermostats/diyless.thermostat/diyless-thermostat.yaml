@@ -128,6 +128,8 @@ sensor:
     name: Wi-Fi Signal
     icon: mdi:wifi-strength-4
     entity_category: diagnostic
+    device_class: signal_strength
+    unit_of_measurement: "dBm"
     update_interval: 60s
 
 text_sensor:
