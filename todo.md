@@ -7,3 +7,5 @@
   - `mdi:wifi-strength-2`
   - `mdi:wifi-strength-3`
   - `mdi:wifi-strength-4`
+
+Test something
